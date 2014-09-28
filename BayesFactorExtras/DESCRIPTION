@@ -6,7 +6,7 @@ Date: 2014-09-27
 Author: Richard D. Morey
 Maintainer: Richard D. Morey <richarddmorey@gmail.com>
 Depends:
-    BayesFactor, brew, knitr, shiny
+    base64enc, BayesFactor, brew, knitr, shiny
 Description: This package contains extra functions that can be used to enhance
     the BayesFactor package, such as plots and reports.
 License: GPL 2.0

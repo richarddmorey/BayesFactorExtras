@@ -8,9 +8,6 @@
 ##' @export
 ##' @keywords hplot
 ##' @author Richard D. Morey (\email{richarddmorey@@gmail.com})
-
-
-
 posterior.plot <- function(object, ...){
   plot(1:10)
 }
