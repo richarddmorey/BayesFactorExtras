@@ -17,7 +17,10 @@
 #'  
 #'  Maintainer: Richard D. Morey <richarddmorey@@gmail.com>
 #'@seealso \code{\link[BayesFactor:BayesFactor-package]{BayesFactor}}
-#'@keywords BayesFactor
+#'@keywords htest
+#'@import htmltools
+#'@importFrom knitr knit_print
+#'@importFrom jsonlite toJSON
 #'@examples
 #'
 #'## See specific functions for examples.

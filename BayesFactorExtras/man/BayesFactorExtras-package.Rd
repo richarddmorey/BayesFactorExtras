@@ -26,5 +26,5 @@ Richard D. Morey
 \seealso{
 \code{\link[BayesFactor:BayesFactor-package]{BayesFactor}}
 }
-\keyword{BayesFactor}
+\keyword{htest}
 

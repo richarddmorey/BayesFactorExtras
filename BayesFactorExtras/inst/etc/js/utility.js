@@ -21,3 +21,16 @@ function expString(x)
     return Math.exp(x);
   }
 }
+
+
+function buildBFBayesFactor(divname)
+{
+  var jsonContent = $("#" + divname + "_json").text();
+  var bfObj = $.parseJSON(jsonContent);
+  $.each(bfObj, function(index, value){
+    var model = $("<td/>", { class: "bfmodel" }).html(value['$row']);
+    var bf = $("<td/>", { class: "bfnum" }).html(expString(value['bf']));
+    var error = $("<td/>", { class: "bferr" }).html(value['error']*100 + "%");
+    $("<tr/>", { class: "bfrow" }).appendTo("#" + divname + "_bf").append(model).append(bf).append(error);
+  });
+}

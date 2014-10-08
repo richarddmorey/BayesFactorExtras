@@ -15,7 +15,6 @@
 ##' @references See \url{http://bayesfactor.blogspot.nl/2014/09/embedding-rdata-files-in-rmarkdown.html}
 createDownloadURI = function(list, filename = stop("'filename' must be specified"), textHTML = "Click here to download the data.", fileext = "RData", envir = parent.frame())
 {
-  require(base64enc,quietly = TRUE)
   divname = paste(sample(LETTERS),collapse="")
   tf = tempfile(pattern=filename, fileext = fileext)
   save(list = list, file = tf, envir = envir)
@@ -23,7 +22,7 @@ createDownloadURI = function(list, filename = stop("'filename' must be specified
   
   uri = dataURI(file = tf, mime = "application/octet-stream", encoding = "base64")
   
-  scriptTemplate = system.file("etc/html/downloadURI.html", package = "BayesFactorExtras")
+  scriptTemplate = system.file("etc", "html", "downloadURI.html", package = "BayesFactorExtras")
   scriptCode = readChar(scriptTemplate, file.info(scriptTemplate)$size)
   
   # Substitute in the variables
