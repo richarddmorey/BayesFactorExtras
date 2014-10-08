@@ -14,13 +14,6 @@ knit_print.BFBayesFactor <- function( x, ... )
   divname = paste(sample(LETTERS),collapse="")
   jsonobject = toJSON(x@bayesFactor)
     
-  #scriptTemplate = system.file("etc", "html", "BFBayesFactor.html", package = "BayesFactorExtras")
-  #res = readChar(scriptTemplate, file.info(scriptTemplate)$size)
-
-  # Substitute in the variables
-  #res = gsub("\\$DIVNAME", divname, res)
-  #res = gsub("\\$JSONOBJECT", jsonobject, res)
-  
   mainDiv = tags$div(id = divname, class = "BFBayesFactor")
   html = tagAppendChildren(mainDiv, 
       tags$div(HTML(jsonobject), id = paste0(divname,"_json"), class = "BFBayesFactor_json"),
