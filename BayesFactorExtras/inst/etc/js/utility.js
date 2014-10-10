@@ -113,7 +113,8 @@ function buildBFBayesFactor(divname, denom_index)
   $("#" + divname + " .bfrow").click( setDenom );
   $("#" + divname + " .BFBayesFactor_search").keyup( function(){
     bfSearch.call( this );
-  });
+  }).keyup();
+  
 }
 
 function buildBFDenominator(obj, divname)
