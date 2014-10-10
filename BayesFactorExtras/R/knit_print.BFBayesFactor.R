@@ -12,11 +12,16 @@
 knit_print.BFBayesFactor <- function( x, ... )
 {
   divname = paste(sample(LETTERS),collapse="")
-  jsonobject = toJSON(x@bayesFactor)
+  denom = (1/x[1]) / (1/x[1])
+  df = c(denom,x)@bayesFactor
+  df = data.frame(df,index = 1:nrow(df) - 1)
+  jsonobject = toJSON(df)
     
   mainDiv = tags$div(id = divname, class = "BFBayesFactor")
   html = tagAppendChildren(mainDiv, 
       tags$div(HTML(jsonobject), id = paste0(divname,"_json"), class = "BFBayesFactor_json"),
+      tags$div(id = paste0(divname,"_denom"), class = "BFBayesFactor_denom"),
+      tags$input(id = paste0(divname,"_search"), class = "BFBayesFactor_search"),
       tags$table(id = paste0(divname,"_bf"), class = "BFBayesFactor_bf"),
       tags$script(HTML(paste0("
         $(document).ready(function () {

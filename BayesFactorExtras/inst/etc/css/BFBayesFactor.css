@@ -1,8 +1,51 @@
 .BFBayesFactor_json {
-  visibility: hidden;
+  display: none;
 }
 
+.bfindex {
+  display: none;
+}
 
 table.BFBayesFactor_bf {
+  
+}
+
+table.BFBayesFactor_bf tr:nth-child(odd){ background-color:#eeeeee; }
+table.BFBayesFactor_bf tr:nth-child(even){ background-color:#ffffff; }
+
+.bfnum {
+  display: none;
+}
+
+.bfmodel {
   font-family: "Andale Mono", AndaleMono, monospace;
+}
+
+.bfdisplay {
+  font-family: "Andale Mono", AndaleMono, monospace;
+}
+
+.bferr {
+  font-family: "Andale Mono", AndaleMono, monospace;
+}
+
+tr.bfpos {
+  color: blue;
+}
+
+tr.bfneg {
+  color: red;
+}
+
+tr.bfneut {
+  color: black;
+}
+
+tr.bfSearchInclude {
+  visibility: visible;
+}
+
+tr.bfSearchExclude {
+  visibility: collapse;
+  line-height: 0;
 }
