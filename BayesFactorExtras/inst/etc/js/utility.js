@@ -104,7 +104,7 @@ function buildBFBayesFactor(divname, denom_index)
       bfprefix = "1 / ";
     }
     var ind = $("<td/>", { class: "bfindex" }).html( value['index'] );
-    var model = $("<td/>", { class: "bfmodel" }).html( value['$row'] );
+    var model = $("<td/>", { class: "bfmodel", title: "Click to make this model the denominator." }).html( value['$row'] );
     var bfnum = $("<td/>", { class: "bfnum" }).html( bf );    
     var bfdisplay = $("<td/>", { class: "bfdisplay" }).html( bfprefix + expString( Math.abs(bf) ) );
     var error = $("<td/>", { class: "bferr" }).html( "&#177;" + prettyErr( err ) );
@@ -168,27 +168,35 @@ function bfSearch()
     var exc = true;
     var suf = true;
     var model = $( ".bfmodel", this ).text();
-    if( sufficient.length ){
-      var suf = $.map( sufficient, function( value, index ){
+    
+    function mapSearch( value, index )
+    {
+      var first = value.substr(0, 1);
+      if( ( first == "#" ) ){
+        if( value.length > 1){
+          return model.split(" + ").length == value.substr(1);
+        }else{
+          return true;
+        }
+      }else{
         return model.match( value ) !== null;
-      }).some( function(el){ return el; } );
+      }
     }
-    if( necessary.length ){
-      nec = $.map( necessary, function( value, index ){
-        return model.match( value ) !== null;
-      }).every( function(el){ return el; } );
-    }
-    if( exclude.length ){
-      exc = $.map( exclude, function( value, index ){
-        return model.match( value ) !== null;
-      }).every( function(el){ return !el; } );
-    }
+
+    if( sufficient.length )
+      var suf = $.map( sufficient, mapSearch ).some( function(el){ return el; } );
+    if( necessary.length )
+      nec = $.map( necessary, mapSearch ).every( function(el){ return el; } );
+    if( exclude.length )
+      exc = $.map( exclude, mapSearch ).every( function(el){ return !el; } );
+
     if( !suf | !nec | !exc ){
-      $( this ).removeClass( "bfSearchInclude" ).addClass( "bfSearchExclude" );
+      $( this ).hide();
+      //$( this ).removeClass( "bfSearchInclude" ).addClass( "bfSearchExclude" );
     }else{
-      $( this ).removeClass( "bfSearchExclude" ).addClass( "bfSearchInclude" );
+      $( this ).show();
+      //$( this ).removeClass( "bfSearchExclude" ).addClass( "bfSearchInclude" );
     }
   });
-  
-
 }
+
