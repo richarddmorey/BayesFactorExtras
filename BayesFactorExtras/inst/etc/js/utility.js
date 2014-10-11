@@ -1,5 +1,19 @@
 zeroTermModels = { BFlinearModel: [ "Intercept only" ], };
 
+function getSortOrder(toSort) {
+  for (var i = 0; i < toSort.length; i++) {
+    toSort[i] = [toSort[i], i];
+  }
+  toSort.sort(function(left, right) {
+    return left[0] < right[0] ? -1 : 1;
+  });
+  var sortIndices = [];
+  for (var j = 0; j < toSort.length; j++) {
+    sortIndices.push(toSort[j][1]);
+  }
+  return sortIndices;
+}
+
 
 function expString(x)
 {
@@ -93,6 +107,16 @@ function buildBFBayesFactor(divname, denom_index)
   var modelType = $("#" + divname + "_modeltype").text();
   buildBFDenominator(bfObj.splice(denom_index,1)[0], divname);
   
+  var th_model = $("<th/>", { class: "bfcolunsorted bfhmodel bfhead"}).data("sorted",0);
+  var th_errdisplay = $("<th/>", { class: "bfcolunsorted bfherr bfhead"}).data("sorted",0);
+  var th_bfdisplay = $("<th/>", { class: "bfcolunsorted bfhbf bfhead"}).data("sorted",0);
+
+  $("<thead/>").appendTo( "#" + divname + "_bf" ).append($("<tr/>", { class: "bfhrow" }));
+  $( "#" + divname + "_bf tr" )
+  .append( th_model )
+  .append( th_bfdisplay )
+  .append( th_errdisplay );
+  
   $.each(bfObj, function(index, value){    
     var bf = value['bf'] - denombf;
     var err = Math.sqrt( Math.pow( value['error'], 2 ) + Math.pow( denomerr, 2 ) );
@@ -106,32 +130,74 @@ function buildBFBayesFactor(divname, denom_index)
       signclass = "bfneg";
       bfprefix = "1 / ";
     }
-    var nterms = $("<td/>", { class: "bfnterms bfhide" }).text( bfNterms( value['row'], modelType ) );
-    var ind = $("<td/>", { class: "bfindex bfhide" }).text( value['index'] );
-    var model = $("<td/>", { class: "bfmodel", title: "Click to make this model the denominator." }).text( value['row'] );
-    var bfnum = $("<td/>", { class: "bfnum bfhide" }).text( bf );    
-    var bfdisplay = $("<td/>", { class: "bfdisplay" }).text( bfprefix + expString( Math.abs(bf) ) );
-    var error = $("<td/>", { class: "bferr" }).html( "&#177;" + prettyErr( err ) );
-    $("<tr/>", { class: "bfrow " + signclass }).appendTo("#" + divname + "_bf").append(model).append(bfdisplay).append(error).append(ind).append(bfnum).append(nterms);
+    var model = $("<td/>", { class: "bfmodel", title: "Click to make this model the denominator." }).text( value['row'] ).data("sort", bfNterms( value['row'], modelType ));
+    var bfdisplay = $("<td/>", { class: "bfdisplay" }).text( bfprefix + expString( Math.abs(bf) ) ).data( "sort", bf );
+    var errordisplay = $("<td/>", { class: "bferrdisplay" }).html( "&#177;" + prettyErr( err ) ).data( "sort", err );
+    $("<tr/>", { class: "bfrow " + signclass }).data( "index", value['index'])
+    .appendTo("#" + divname + "_bf")
+    .append(model)
+    .append(bfdisplay)
+    .append(errordisplay)
   });
   $("#" + divname + " .bfrow").click( setDenom );
+  $("#" + divname + " .bfhead").click( bfSort );
   $("#" + divname + " .BFBayesFactor_search").keyup( function(){
     bfSearch.call( this );
   }).keyup();
   
 }
 
+function bfSort(){
+  var divname = $( this ).parents(".BFBayesFactor").attr('id');
+  var sortColClass;
+  var sortOrder = $( this ).data("sorted");
+  sortOrder = sortOrder ? -sortOrder : -1;
+  sortClass = sortOrder == -1 ? "bfcolascsorted" : "bfcoldecsorted"; 
+  $( this ).parent()
+    .children( "th" )
+    .data("sorted", 0)
+    .removeClass("bfcoldecsorted bfcolascsorted")
+    .addClass("bfcolunsorted");
+  $( this ).data( "sorted", sortOrder )
+    .removeClass("bfcoldecsorted bfcolascsorted bfcolunsorted")
+    .addClass( sortClass );
+  
+  if( $( this ).hasClass("bfhbf") ){ // sort by Bayes factor
+    sortColClass = ".bfdisplay";
+  }else if( $( this ).hasClass("bfhmodel") ){ // sort by nterms 
+    sortColClass = ".bfmodel";
+  }else if( $( this ).hasClass("bfherr") ){ // sort by error
+    sortColClass = ".bferrdisplay";
+  }else{
+    return;
+  }
+  
+  var x = $("#" + divname + " .bfrow").map(function(){
+    var idx = $( this ).data( "index" );
+    var sortValue = $( sortColClass, this ).data("sort");
+    return sortValue;
+  }).get();
+  
+  var order = getSortOrder(x);
+  if(sortOrder == -1) order.reverse();
+  
+  var els = $("#" + divname + " .bfrow");
+  var el;
+  for( var i=order.length - 1 ; i >= 0 ; i-- ){
+    el = els.eq( order[ i ] );
+    el.prependTo( el.parent() );
+  }
+}
+
 function buildBFDenominator(obj, divname)
 {
-  var model = $("<div/>", { class: "bfmodel" }).text( obj['row'] );
-  var ind = $("<div/>", { class: "bfindex bfhide" }).text( obj['index'] );
+  var model = $("<div/>", { class: "bfmodel" }).data( "index", obj['index'] ).text( obj['row'] );
   model.appendTo("#" + divname + "_denom");
-  ind.appendTo("#" + divname + "_denom");
 }
 
 function setDenom()
 {
-  var idx = $( this ).find(".bfindex").text();  
+  var idx = $( this ).data( "index" );
   var divname = $( this ).parents(".BFBayesFactor").attr('id');
   buildBFBayesFactor( divname, idx );
 }
@@ -179,7 +245,7 @@ function bfSearch()
     var exc = true;
     var suf = true;
     var model = $( ".bfmodel", this ).text();
-    var nterms = $( ".bfnterms", this ).text();
+    var nterms = $( ".bfmodel", this ).data('sort');
     
     function mapSearch( value, index )
     {

@@ -14,21 +14,24 @@ table.BFBayesFactor_bf {
 
 }
 
-table.BFBayesFactor_bf tr:nth-child(odd){ background-color:#eeeeee; }
-table.BFBayesFactor_bf tr:nth-child(even){ background-color:#ffffff; }
+table.BFBayesFactor_bf tbody > tr:nth-child(odd){ background-color:#eeeeee; }
+table.BFBayesFactor_bf tbody > tr:nth-child(even){ background-color:#ffffff; }
 
 
 .bfmodel {
   font-family: "Andale Mono", AndaleMono, monospace;
   padding-right:40px;
+  min-width: 100px;
 }
 
 .bfdisplay {
   font-family: "Andale Mono", AndaleMono, monospace;
+  min-width: 100px;
 }
 
-.bferr {
+.bferrdisplay {
   font-family: "Andale Mono", AndaleMono, monospace;
+  min-width: 50px;
 }
 
 tr.bfpos {
@@ -51,6 +54,36 @@ tr.bfSearchExclude {
   visibility: collapse;
   line-height: 0;
 }
+
+th.bfnosort {
+
+}
+
+thead > tr.bfhrow {
+  background-color: #dddddd;
+  cursor: pointer;
+  height: 20px;
+  border: 1px solid black;
+}
+
+th.bfcolascsorted {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA5UlEQVQ4jc2QvUoDURCFvw2L1SKWgdtZCOYJBp/AZ5AdCLKkkrxEHsFuq+DtLCysfYBbWQm2FjsQrCwlVYqskiz7S1LklPee882ZgZOWqMWidtbmGXUwMmDWZohapt8C38AauAzevfZuIGpXQBK8ew/efQAjUZt0tP0PJ6I2r3l/ELXz1gaiBtud8xp2DmSlp3GFO+AlePdbTQfv1sAzkNYCRE2AVfDuq2b6H6QAClG72fsQtbGo3TcFqxK1qaiNYXvduKy17AsAnoBU1OJI1BbAJ/AzAABwAVzHwOPA4K7eDsgeSRvDsj/TRnmR3gAAAABJRU5ErkJggg==);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+th.bfcoldecsorted {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA3klEQVQ4jc2QsWoCURBFj8sillYh8CxCCsF8wWAVUlmGIOkmWImFQsgf+Bti90Ss8xHy/iBfME0qaxGxcFeUXVYXC73VDNx77nsDt1ZF1B6uAcTACPgDViWzdaAVA2PgG1gE77aXJEUtAn6AcRS82wAzoFei/QuYJdkDVUTt7YL2V1Frp3uUDsG7ADyK2lNBuAE0gnfLDCDRHPgQtVpOuAp8sv/uQSeA4B3ABOjnPKAPTBNPsUStKWrdo/1d1F7yvJUCSAf4B9bAc/Du93x1FjIQtWGRJz7DmJI99J1pB0nWO8jSJd4cAAAAAElFTkSuQmCC);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+th.bfcolunsorted {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAQCAMAAABA3o1rAAAASFBMVEVMaXE4XeU4XOg7WOw3XeU4XOU5XuY6Xeg3XeM4UOg3XuY3XOQ4W+UAgP81YOo4XeY4XeQ4XOY4XOU5XOY2XuQ3XuY4XeQ5XuV46xBUAAAAGHRSTlMAUisNc21aFkoFHkE5AhiDaDJOSCZcYGIF/L3qAAAAd0lEQVR4Aa3QywrDIBSE4V+jticXc0/e/027GCqlgqt8m1HBEQ+PMUNef0CWiMzp/SPNyL76DVWFiWIKKuZw4LzW+aK4s7KLALHTbhwQhhEJpnLk7JV9QtL34Kwv1JX1k/mmuLLSO3BH61ubX/f2YOJCe7RmPOUDE6sE62xVWuQAAAAASUVORK5CYII=);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
 
 input.BFBayesFactor_search {
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABfklEQVQ4jZXSPUvDUBTG8X/aRqkRFV8KvlUttIigk3RwkPQDiKjg5C6I4NrdpeCgLoIgOPkVdBBsvoJOUpVqJweNRdFa05vrkARbm0g9U8I9z4+TnKvgVjZvdAGbwAowDrwCBrCby+hXBJTihieBMzdIeziMJQS201MDtnIZ/cAXyOaNTuBSSpmYjsVIDw6hqe0IaXP78oxRKvElhA0s5DL66W8gBGwAiZlYjPnRMdrCKpZtY0tI9PSxmEx5fTvZvNE0QQhYAkgPDWPL5hH7oxoT3d0AU0DKD4hrqko0ovr+JAkMaJr3GvcDylUhfMNeVWs177HsBxiWEBTLL/h8ARLJjWkCmEDTOkPAvqIonxcP97xVKz9B6cTPi3d8OBNc4ay0obx7sAYcKxBJ9vbSH+2gUrMomCbvllXffwSs5zK63QC4iA7sALN1gSegAMwFIUrdAe6eR3BuZBm4do9OgFU/pAEIqmzeiAQhLQF/IHstAwHI47+AOuQQWAa2vwFyC4lobkmxNQAAAABJRU5ErkJggg==)

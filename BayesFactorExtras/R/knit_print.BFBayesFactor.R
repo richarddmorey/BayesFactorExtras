@@ -39,7 +39,7 @@ knit_print.BFBayesFactor <- function( x, ... )
   
   if(options()$BFEknitrDownload){
     DLtag = createDownloadURI("x", filename = "BayesFactorObject", textHTML = "Click here to download this BayesFactor object.", envir = parent.frame(), printHTML = FALSE)
-    html = tagList(DLtag, html)
+    html = tagList(html, DLtag)
   }
     
   
