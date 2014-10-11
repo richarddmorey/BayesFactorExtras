@@ -1,13 +1,10 @@
-<a style='text-decoration: none' id='$DIVNAME'></a>
-    <script>
-    	var a = document.createElement('a');
-    	var div = document.getElementById('$DIVNAME');
-    	div.appendChild(a);
-    	a.setAttribute('href', '$URITEXT');
-    	a.innerHTML = '$TEXTHTML' + ' ($FILENAME)';
-    	if (typeof a.download != 'undefined') {
-      		a.setAttribute('download', '$FILENAME');
-    	}else{
-      		a.setAttribute('onclick', 'alert("Your browser does not support the download HTML5 attribute. You must rename the file to $FILENAME after downloading it (or use Chrome/Firefox/Opera).")');
-    	}
-    </script>
+var a = document.createElement('a');
+var div = document.getElementById('$DIVNAME');
+div.appendChild(a);
+a.setAttribute('href', '$URITEXT');
+a.innerHTML = '$TEXTHTML' + ' ($FILENAME)';
+if (typeof a.download != 'undefined') {
+    a.setAttribute('download', '$FILENAME');
+}else{
+    a.setAttribute('onclick', 'alert("Your browser does not support the download HTML5 attribute. You must rename the file to $FILENAME after downloading it (or use Chrome/Firefox/Opera).")');
+}

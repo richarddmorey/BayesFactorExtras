@@ -1,3 +1,6 @@
+zeroTermModels = { BFlinearModel: [ "Intercept only" ], };
+
+
 function expString(x)
 {
   if( isNaN(x) ) return "NA";
@@ -87,7 +90,7 @@ function buildBFBayesFactor(divname, denom_index)
   var bfObj = $.parseJSON(jsonContent);
   var denombf = bfObj[ denom_index ][ 'bf' ];
   var denomerr = bfObj[ denom_index ][ 'error' ];
- 
+  var modelType = $("#" + divname + "_modeltype").text();
   buildBFDenominator(bfObj.splice(denom_index,1)[0], divname);
   
   $.each(bfObj, function(index, value){    
@@ -103,12 +106,13 @@ function buildBFBayesFactor(divname, denom_index)
       signclass = "bfneg";
       bfprefix = "1 / ";
     }
-    var ind = $("<td/>", { class: "bfindex" }).html( value['index'] );
-    var model = $("<td/>", { class: "bfmodel", title: "Click to make this model the denominator." }).html( value['$row'] );
-    var bfnum = $("<td/>", { class: "bfnum" }).html( bf );    
-    var bfdisplay = $("<td/>", { class: "bfdisplay" }).html( bfprefix + expString( Math.abs(bf) ) );
+    var nterms = $("<td/>", { class: "bfnterms bfhide" }).text( bfNterms( value['row'], modelType ) );
+    var ind = $("<td/>", { class: "bfindex bfhide" }).text( value['index'] );
+    var model = $("<td/>", { class: "bfmodel", title: "Click to make this model the denominator." }).text( value['row'] );
+    var bfnum = $("<td/>", { class: "bfnum bfhide" }).text( bf );    
+    var bfdisplay = $("<td/>", { class: "bfdisplay" }).text( bfprefix + expString( Math.abs(bf) ) );
     var error = $("<td/>", { class: "bferr" }).html( "&#177;" + prettyErr( err ) );
-    $("<tr/>", { class: "bfrow " + signclass }).appendTo("#" + divname + "_bf").append(model).append(bfdisplay).append(error).append(ind).append(bfnum);
+    $("<tr/>", { class: "bfrow " + signclass }).appendTo("#" + divname + "_bf").append(model).append(bfdisplay).append(error).append(ind).append(bfnum).append(nterms);
   });
   $("#" + divname + " .bfrow").click( setDenom );
   $("#" + divname + " .BFBayesFactor_search").keyup( function(){
@@ -119,8 +123,8 @@ function buildBFBayesFactor(divname, denom_index)
 
 function buildBFDenominator(obj, divname)
 {
-  var model = $("<div/>", { class: "bfmodel" }).html( obj['$row'] );
-  var ind = $("<div/>", { class: "bfindex" }).html( obj['index'] );
+  var model = $("<div/>", { class: "bfmodel" }).text( obj['row'] );
+  var ind = $("<div/>", { class: "bfindex bfhide" }).text( obj['index'] );
   model.appendTo("#" + divname + "_denom");
   ind.appendTo("#" + divname + "_denom");
 }
@@ -147,6 +151,13 @@ function bfSearch()
   var sufficient = [ ];
   var exclude = [ ];
   
+  if( !validHashSearch.call( this ) ){
+    $( this ).addClass( "bfInvalidSearch" );
+    return;
+  }else{
+    $( this ).removeClass( "bfInvalidSearch" );
+  }
+  
   $.each(terms, function( index, value ){
     var first = value.substr(0, 1);
     if( !value.length ) return; 
@@ -168,13 +179,14 @@ function bfSearch()
     var exc = true;
     var suf = true;
     var model = $( ".bfmodel", this ).text();
+    var nterms = $( ".bfnterms", this ).text();
     
     function mapSearch( value, index )
     {
       var first = value.substr(0, 1);
       if( ( first == "#" ) ){
         if( value.length > 1){
-          return model.split(" + ").length == value.substr(1);
+          return nterms == value.substr(1);
         }else{
           return true;
         }
@@ -198,5 +210,24 @@ function bfSearch()
       //$( this ).removeClass( "bfSearchExclude" ).addClass( "bfSearchInclude" );
     }
   });
+}
+
+function validHashSearch(){
+  var modelType = $( this ).parents(".BFBayesFactor").find(".BFBayesFactor_modeltype").text();
+  if( ( modelType != "BFlinearModel" ) & ( $( this ).val().match("#") !== null ) ) return false;
+  return true;
+}
+
+function bfNterms( model, type ){
+  if( ( type != "BFlinearModel" ) ) return NaN;
+  ztm = zeroTermModels[ type ];
+  isztm = $.map(ztm, function( value, index ){
+    return value == model;
+  }).some( function( el ) { return el; } );
+  
+  // model is a zero term model
+  if(isztm) return 0;
+  
+  return model.split(" + ").length;
 }
 

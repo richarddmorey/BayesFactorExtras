@@ -1,9 +1,9 @@
-.BFBayesFactor_json {
+.bfhide {
   display: none;
 }
 
-.bfindex {
-  display: none;
+table.BFBayesFactor td {
+  padding: 15px;
 }
 
 table.BFBayesFactor_bf:hover {
@@ -17,12 +17,10 @@ table.BFBayesFactor_bf {
 table.BFBayesFactor_bf tr:nth-child(odd){ background-color:#eeeeee; }
 table.BFBayesFactor_bf tr:nth-child(even){ background-color:#ffffff; }
 
-.bfnum {
-  display: none;
-}
 
 .bfmodel {
   font-family: "Andale Mono", AndaleMono, monospace;
+  padding-right:40px;
 }
 
 .bfdisplay {
@@ -77,4 +75,8 @@ input.BFBayesFactor_search {
 
 input.BFBayesFactor_search:focus {
   width: 300px;
+}
+
+input.bfInvalidSearch {
+  color: red;
 }

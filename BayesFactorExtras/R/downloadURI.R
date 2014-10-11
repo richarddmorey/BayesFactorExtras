@@ -8,12 +8,13 @@
 ##' @param textHTML text to link in the web page
 ##' @param fileext an extension to give the file
 ##' @param envir the environment to search for the objects in \code{list}
-##' @return This function returns NULL invisibly.
+##' @param printHTML cat() the output? 
+##' @return This function returns an html object containing the text invisibly.
 ##' @export
 ##' @keywords misc
 ##' @author Richard D. Morey (\email{richarddmorey@@gmail.com})
 ##' @references See \url{http://bayesfactor.blogspot.nl/2014/09/embedding-rdata-files-in-rmarkdown.html}
-createDownloadURI = function(list, filename = stop("'filename' must be specified"), textHTML = "Click here to download the data.", fileext = "RData", envir = parent.frame())
+createDownloadURI = function(list, filename = stop("'filename' must be specified"), textHTML = "Click here to download the data.", fileext = "RData", envir = parent.frame(), printHTML = TRUE)
 {
   divname = paste(sample(LETTERS),collapse="")
   tf = tempfile(pattern=filename, fileext = fileext)
@@ -24,14 +25,19 @@ createDownloadURI = function(list, filename = stop("'filename' must be specified
   
   scriptTemplate = system.file("etc", "html", "downloadURI.html", package = "BayesFactorExtras")
   scriptCode = readChar(scriptTemplate, file.info(scriptTemplate)$size)
-  
+
   # Substitute in the variables
   scriptCode = gsub("\\$DIVNAME", divname, scriptCode)
   scriptCode = gsub("\\$FILENAME", filenameWithExt, scriptCode)
   scriptCode = gsub("\\$TEXTHTML", textHTML, scriptCode)
   scriptCode = gsub("\\$URITEXT", uri, scriptCode)
+
+  aTag = tags$a(id = divname, style='text-decoration: none')
+  scriptTag = tags$script(HTML(scriptCode))
   
-  cat(scriptCode)
+  html = tagList(aTag, scriptTag)
   
-  invisible(NULL)
+  if(printHTML) print(html)
+  
+  invisible(html)
 }
