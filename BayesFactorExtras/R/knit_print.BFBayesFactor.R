@@ -23,13 +23,32 @@ knit_print.BFBayesFactor <- function( x, ... )
   analysisType = x@denominator@type
   
   mainDiv = tags$div(id = divname, class = "BFBayesFactor")
+  mainTable = tags$table(id = paste0(divname,"_bf"), class = "BFBayesFactor_bf")
+  mainTable = tagAppendChildren(mainTable,
+      tagAppendChildren(tags$thead(class = "bfhead"),
+            tagAppendChildren(tags$tr(class = "bfhrow"),
+                tags$th(class = "bfcolunsorted bfhmodel"),
+                tags$th(class = "bfcolunsorted bfhbf"),
+                tags$th(class = "bfcolunsorted bfherr")                
+            ),tagAppendChildren(tags$tr(class = "bfhtitles"),
+                                tags$th("...the model below..."),
+                                tags$th("...is preferred by..."),
+                                tags$th("")                
+            )
+      ),
+      tags$tbody(class = "bfbody")
+  )
   html = tagAppendChildren(mainDiv, 
       tags$div(HTML(jsonobject), id = paste0(divname,"_json"), class = "BFBayesFactor_json bfhide"),
       tags$div(HTML(analysisType), id = paste0(divname,"_analysistype"), class = "BFBayesFactor_analysistype bfhide"),
       tags$div(HTML(modelType), id = paste0(divname,"_modeltype"), class = "BFBayesFactor_modeltype bfhide"),
-      tags$div(id = paste0(divname,"_denom"), class = "BFBayesFactor_denom"),
+      tagAppendChildren(tags$div(class="denomccontainer"),
+        tags$span("When compared against the model ", class="denomdescription"),                
+        tags$span(id = paste0(divname,"_denom"), class = "BFBayesFactor_denom"),
+        tags$span("...", class="denomdescription")      
+      ),
       tags$input(id = paste0(divname,"_search"), class = "BFBayesFactor_search"),
-      tags$table(id = paste0(divname,"_bf"), class = "BFBayesFactor_bf"),
+      mainTable,
       tags$script(HTML(paste0("
         $(document).ready(function () {
           buildBFBayesFactor('",divname,"');

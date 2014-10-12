@@ -22,6 +22,8 @@ table.BFBayesFactor_bf tbody > tr:nth-child(even){ background-color:#ffffff; }
   font-family: "Andale Mono", AndaleMono, monospace;
   padding-right:40px;
   min-width: 100px;
+  display: inline;
+  text-align: left;
 }
 
 .bfdisplay {
@@ -112,4 +114,14 @@ input.BFBayesFactor_search:focus {
 
 input.bfInvalidSearch {
   color: red;
+}
+
+.denomdescription {
+  font-weight: bold;
+  display: inline;
+  text-align: left;
+}
+
+.bftitles {
+  font-weight: bold;
 }
