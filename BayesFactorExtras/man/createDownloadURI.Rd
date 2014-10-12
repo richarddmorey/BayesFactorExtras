@@ -5,7 +5,7 @@
 \usage{
 createDownloadURI(list, filename = stop("'filename' must be specified"),
   textHTML = "Click here to download the data.", fileext = "RData",
-  envir = parent.frame())
+  envir = parent.frame(), printHTML = TRUE)
 }
 \arguments{
 \item{list}{R objects to put in the Rdata file}
@@ -17,9 +17,11 @@ createDownloadURI(list, filename = stop("'filename' must be specified"),
 \item{fileext}{an extension to give the file}
 
 \item{envir}{the environment to search for the objects in \code{list}}
+
+\item{printHTML}{cat() the output?}
 }
 \value{
-This function returns NULL invisibly.
+This function returns an html object containing the text invisibly.
 }
 \description{
 Creates HTML to insert Rdata file into web page

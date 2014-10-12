@@ -11,7 +11,10 @@
 #'changed using \code{\link[base]{options}}().
 #'
 #'\describe{
-#'\item{\code{BFEknitrDownload}}{If \code{TRUE} (default), a link to download the Bayes factor object is provided. This object contains the analysis and the data.} 
+#'\item{\code{BFEknitrDownload}}{If \code{TRUE} 
+#'(default), a link to download the Bayes factor object is 
+#'provided. This object contains the analysis and the data.}
+#'}
 #'
 #'@name options-BayesFactorExtras
 #'@seealso \code{\link[base]{options}}

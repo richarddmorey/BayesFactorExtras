@@ -1,0 +1,9 @@
+
+```{r echo=FALSE,results='hide'}
+library(BayesFactorExtras)
+options(BFEknitrDownload = FALSE)
+```
+
+```{r, echo=FALSE}
+BFObj
+```

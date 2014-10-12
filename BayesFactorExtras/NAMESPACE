@@ -3,6 +3,7 @@
 S3method(knit_print,BFBayesFactor)
 export(BFEInfo)
 export(createDownloadURI)
+export(interactBF)
 export(posterior.plot)
 import(htmltools)
 importFrom(jsonlite,toJSON)
