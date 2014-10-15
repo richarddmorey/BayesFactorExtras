@@ -10,6 +10,7 @@
 ##' @param envir the environment to search for the objects in \code{list}
 ##' @param printHTML cat() the output? 
 ##' @return This function returns an html object containing the text invisibly.
+##' @import base64enc
 ##' @export
 ##' @keywords misc
 ##' @author Richard D. Morey (\email{richarddmorey@@gmail.com})

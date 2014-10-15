@@ -1,8 +1,9 @@
+Encoding: UTF-8
 Package: BayesFactorExtras
 Type: Package
 Title: Extra functions for use with the BayesFactor package
 Version: 0.1
-Date: 2014-09-27
+Date: 2014-10-15
 Author: Richard D. Morey
 Maintainer: Richard D. Morey <richarddmorey@gmail.com>
 Depends:
@@ -11,7 +12,9 @@ Depends:
 Imports:
     jsonlite,
     htmltools (>= 0.2.4),
-    knitr (>= 1.5.33)
+    knitr (>= 1.5.33),
+    ggplot2,
+    rmarkdown
 Description: This package contains extra functions that can be used to enhance
     the BayesFactor package, such as plots and reports.
-License: GPL 2.0
+License: GPL-2
