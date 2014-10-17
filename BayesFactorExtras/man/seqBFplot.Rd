@@ -3,13 +3,13 @@
 \alias{seqBFplot}
 \title{Plot a Bayes factor object}
 \usage{
-seqBFplot(n, BF, xlab = "n", ylab = "log(BF)", main = "", log.it = TRUE,
-  forH1 = TRUE)
+seqBFplot(n, bf, linetype = NA, xlab = "n", ylab = "log(bf)", main = "",
+  log.it = TRUE, forH1 = TRUE)
 }
 \arguments{
 \item{n}{A vector of numbers for the x axis}
 
-\item{BF}{A vector of Bayes factors (same length as x)}
+\item{bf}{A vector of Bayes factors (same length as x)}
 
 \item{xlab}{Label for x axis}
 
@@ -17,9 +17,9 @@ seqBFplot(n, BF, xlab = "n", ylab = "log(BF)", main = "", log.it = TRUE,
 
 \item{main}{Main title}
 
-\item{log.it}{Should the Bayes factor in the \code{BF} parameter be logged?}
+\item{log.it}{Should the Bayes factor in the \code{bf} parameter be logged?}
 
-\item{forH1}{If \code{TRUE}, positive BFs mean evidence in favor of H1 ("H1 over H0" Bayes factor). This is the default in the Bayes factor package.}
+\item{forH1}{If \code{TRUE}, positive bfs mean evidence in favor of H1 ("H1 over H0" Bayes factor). This is the default in the Bayes factor package.}
 }
 \description{
 Plot a sequence of Bayes factors
@@ -34,15 +34,15 @@ This function is in particular useful for plotting the trajectory of a sequentia
 data(sleep)
 
 # Compute accumulating evidence from n1=5 participants to n2=10 participants
-BF <- c()
+bf <- c()
 for (i in 5:10) {
-	BF0 <- ttestBF(
+	bf0 <- ttestbf(
 		x = sleep$extra[sleep$group==1][1:i],
 		y = sleep$extra[sleep$group==2][1:i], paired=TRUE)
-	BF <- c(BF, as.vector(BF0))
+	bf <- c(bf, as.vector(bf0))
 }
 
-seqBFplot(5:10, BF)
+seqBFplot(5:10, bf)
 }
 \author{
 Felix D. Schönbrodt (\email{felix@nicebread.de})
