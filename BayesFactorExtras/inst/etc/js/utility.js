@@ -140,14 +140,15 @@ function buildBFBayesFactor(divname, denom_index)
   $("#" + divname + " .bfhrow").children()
     .not( ".bfcolunsorted" )
     .click().click();
-  $("#" + divname + " .BFBayesFactor_search").keyup( function(){
-    bfSearch.call( this );
-  }).keyup();
+  $("#" + divname + " .BFBayesFactor_search").off( "input" )
+    .on( "input", function(){
+      bfSearch.call( this );
+    })
+    .trigger( "input" );
   
 }
 
 function bfSort(){
-  console.log("Sorting" + $( this ).data("sortCol"));
   var divname = $( this ).parents(".BFBayesFactor").attr('id');
   var sortColClass;
   var sortOrder = $( this ).data("sorted");
@@ -203,14 +204,15 @@ function destroyBFBayesFactor( divname )
 
 function bfSearch()
 {
+  console.log("Search.");
   var divname = $( this ).parents(".BFBayesFactor").attr('id');
-  var txt = $( this ).val();
-  var terms = txt.split(/\s/);
+  var txt = $.trim( $( this ).val() );
+  var terms = txt.split(/\s+/);
   var necessary = [ ];
   var sufficient = [ ];
   var exclude = [ ];
   
-  if( !validHashSearch.call( this ) ){
+  if( !validSearch.call( this ) ){
     $( this ).addClass( "bfInvalidSearch" );
     return;
   }else{
@@ -249,11 +251,21 @@ function bfSearch()
         }else{
           return true;
         }
+      }else if(first == "@"){
+        var rxp = [];
+        for( var i = 0 ; i < value.length ; i++ )
+          rxp.push( "[^\\s]+" );
+        rxp = new RegExp( rxp.join(":") );
+        if( value.length > 1){
+          return model.match( rxp ) !== null;
+        }else{
+          return true;
+        }
       }else{
         return model.match( value ) !== null;
       }
     }
-
+    
     if( sufficient.length )
       var suf = $.map( sufficient, mapSearch ).some( function(el){ return el; } );
     if( necessary.length )
@@ -271,9 +283,24 @@ function bfSearch()
   });
 }
 
-function validHashSearch(){
+function validSearch(){
+  var str = $.trim( $( this ).val() );
   var modelType = $( this ).parents(".BFBayesFactor").find(".BFBayesFactor_modeltype").text();
-  if( ( modelType != "BFlinearModel" ) & ( $( this ).val().match("#") !== null ) ) return false;
+  if( ( modelType != "BFlinearModel" ) & ( str.match("#") !== null ) ) return false;
+  if( ( str.match(/@.+/) !== null ) ){
+    var matches = str.match(/[\s\+-]*@:+/);
+    if( matches === null )
+      return false;
+    var terms = str.split(/\s+/);
+    var contains_bad = $.map(terms, function(value, index){
+      if( value.match(/@/) === null ) 
+        return false; 
+      var is_good = value.match(/^[\+-]?@:+$/);
+      return (is_good === null);
+    }).some( function( el ) { return el; } );
+    if(contains_bad) 
+      return false;
+  }
   return true;
 }
 
