@@ -1,0 +1,38 @@
+---
+output:
+  html_document:
+    theme: flatly
+---
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Interactive Bayes factors}
+\usepackage[utf8]{inputenc}
+-->
+
+![alt text](extra/logo.png)
+
+### Interactive BayesFactor objects
+#### Richard D. Morey
+
+```{r echo=FALSE,message=FALSE,results='hide'}
+options(markdown.HTML.stylesheet = 'extra/manual.css')
+library(knitr)
+```
+
+```{r}
+library(BayesFactorExtras)
+```
+
+```{r}
+data(puzzles)
+bf = generalTestBF(RT ~ shape*color*ID, whichRandom="ID", data = puzzles)
+```
+
+```{r}
+show(bf)
+```
+
+```{r}
+bf
+```
+
