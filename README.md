@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/richarddmorey/BayesFactorExtras.svg)](https://travis-ci.org/richarddmorey/BayesFactorExtras)
+
 BayesFactorExtras
 =================
 
