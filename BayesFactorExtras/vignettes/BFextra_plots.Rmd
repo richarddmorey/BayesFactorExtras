@@ -1,0 +1,55 @@
+---
+output:
+  html_document:
+    theme: flatly
+---
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{BayesFactor plots}
+\usepackage[utf8]{inputenc}
+-->
+
+![alt text](extra/logo.png)
+
+### BayesFactor plots
+#### Felix D. Schönbrodt
+
+```{r echo=FALSE, message=FALSE, results='hide'}
+options(markdown.HTML.stylesheet = 'extra/manual.css')
+library(knitr)
+```
+
+```{r}
+library(BayesFactorExtras)
+```
+
+First, run any BayesFactor analysis on a data set:
+```{r}
+data(sleep)
+ttest.p <- ttestBF(x = sleep$extra[sleep$group==1], y = sleep$extra[sleep$group==2], paired=TRUE)
+```
+
+Next, you can pass this object to the `seqBF` function in order to compute the sequential evolution of the Bayes factor.
+The parameter `min.n` controls the lowest sample size at which the sequential procedure starts.
+```{r results='hide'}
+ttest.p.seq <- seqBF(ttest.p, min.n=5)
+```
+
+Finally, you can plot the sequential BF:
+```{r}
+plot(ttest.p.seq)
+```
+
+The numerical values of the sequential BF are stored in the `@bayesFactorSeq` slot of the object.
+Note that the values of the `bf` column are log(BF).
+```{r}
+ttest.p.seq@bayesFactorSeq
+```
+
+If multiple alternative hypotheses are tested, each gets it's own line:
+
+```{r results='hide'}
+ttest.2 <- ttestBF(x = sleep$extra[sleep$group==1], y = sleep$extra[sleep$group==2], nullInterval=c(-Inf, 0))
+ttest.2.seq <- seqBF(ttest.2, min.n=5)
+plot(ttest.2.seq)
+````

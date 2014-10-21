@@ -8,14 +8,17 @@ seqBF(BFobject, min.n = 10, step = 1, ...)
 \arguments{
 \item{BFobject}{A BayesFactor object}
 
-\item{min.n}{Smallest number of participants for which the first BF should be computed. In a one-sample t test / paired t test, this is the overall sample size. In two-sample t tests and ANOVAs, this is the minimum size for each group.}
+\item{min.n}{Smallest number of participants for which the first BF should be computed. In a one-sample t test / paired  test, this is the overall sample size. In two-sample t tests and ANOVAs, this is the minimum size for each group.#}
 
 \item{step}{Step size with which the number of participants is increased}
 
 \item{...}{User parameters which override the settings of the original \code{BFobject}}
 }
 \description{
-Compute a sequence of Bayes factors
+Compute a sequential Bayes factor object
+}
+\details{
+Compute a sequential Bayes factor object
 }
 \examples{
 # Paired/ one-sample t test
@@ -28,11 +31,13 @@ anova1 <- anovaBF(extra ~ group + ID, data = sleep, whichRandom = "ID", progress
 anova1.seq <- seqBF(anova1, min.n=5)
 plot(anova1.seq)
 
-# This does not work fully yet ...
-a2 <- anovaBF(RT ~ shape + color, data = puzzles, whichRandom = "ID", progress=FALSE)
-a2.seq <- seqBF(a2)
+data(puzzles)
+#a2 <- anovaBF(RT ~ shape + color, data = puzzles, whichRandom = "ID", progress=FALSE)
+#a2.seq <- seqBF(a2)
+
 # Two-sample t test, one-sided test
-ttest.2 <- ttestBF(x = sleep$extra[sleep$group==1], y = sleep$extra[sleep$group==2], nullInterval=c(-Inf, 0))
+ttest.2 <- ttestBF(x = sleep$extra[sleep$group==1], y = sleep$extra[sleep$group==2],
+					  nullInterval=c(-Inf, 0))
 ttest.2.seq <- seqBF(ttest.2, min.n=5)
 plot(ttest.2.seq)
 }

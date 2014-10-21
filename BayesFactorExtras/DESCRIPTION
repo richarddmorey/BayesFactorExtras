@@ -8,14 +8,15 @@ Author: Richard D. Morey
 Maintainer: Richard D. Morey <richarddmorey@gmail.com>
 Depends:
     base64enc,
-    BayesFactor (>= 0.9.0)
+    BayesFactor (>= 0.9.9)
 Imports:
     jsonlite,
     htmltools (>= 0.2.4),
     knitr (>= 1.5.33),
     ggplot2,
     rmarkdown,
-    dplyr (>= 0.3)
+    dplyr (>= 0.3),
+    methods
 Description: This package contains extra functions that can be used to enhance
     the BayesFactor package, such as plots and reports.
 License: GPL-2

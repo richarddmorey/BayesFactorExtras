@@ -6,6 +6,7 @@
 #' @title Plot a Bayes factor object
 #' @param n A vector of numbers for the x axis
 #' @param bf A vector of Bayes factors (same length as x)
+#' @param linetype If several lines should be drawn, this variable defines which data point belongs to which line
 #' @param xlab Label for x axis
 #' @param ylab Label for y axis
 #' @param main Main title
@@ -26,13 +27,14 @@
 #' # Compute accumulating evidence from n1=5 participants to n2=10 participants
 #' bf <- c()
 #' for (i in 5:10) {
-#' 	bf0 <- ttestbf(
+#' 	bf0 <- ttestBF(
 #'		x = sleep$extra[sleep$group==1][1:i], 
 #'		y = sleep$extra[sleep$group==2][1:i], paired=TRUE)
 #' 	bf <- c(bf, as.vector(bf0))
 #' }
 #' 
 #' seqBFplot(5:10, bf)
+#' seqBFplot(1:100, cumsum(rnorm(100, 2)))
 
 seqBFplot <- function(n, bf, linetype=NA, xlab="n", ylab="log(bf)", main="", log.it=TRUE, forH1=TRUE) {
 	if (length(n) != length(bf)) stop("`n` and `bf` should have the same length")
@@ -116,5 +118,3 @@ seqBFplot <- function(n, bf, linetype=NA, xlab="n", ylab="log(bf)", main="", log
 	
 	return(p1)
 }
-
-seqBFplot(1:100, cumsum(rnorm(100, 2)))

@@ -11,6 +11,8 @@ seqBFplot(n, bf, linetype = NA, xlab = "n", ylab = "log(bf)", main = "",
 
 \item{bf}{A vector of Bayes factors (same length as x)}
 
+\item{linetype}{If several lines should be drawn, this variable defines which data point belongs to which line}
+
 \item{xlab}{Label for x axis}
 
 \item{ylab}{Label for y axis}
@@ -36,13 +38,14 @@ data(sleep)
 # Compute accumulating evidence from n1=5 participants to n2=10 participants
 bf <- c()
 for (i in 5:10) {
-	bf0 <- ttestbf(
+	bf0 <- ttestBF(
 		x = sleep$extra[sleep$group==1][1:i],
 		y = sleep$extra[sleep$group==2][1:i], paired=TRUE)
 	bf <- c(bf, as.vector(bf0))
 }
 
 seqBFplot(5:10, bf)
+seqBFplot(1:100, cumsum(rnorm(100, 2)))
 }
 \author{
 Felix D. Schönbrodt (\email{felix@nicebread.de})

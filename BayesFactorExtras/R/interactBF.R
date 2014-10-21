@@ -5,6 +5,7 @@
 ##' @param BFObj BayesFactor object
 ##' @return This function returns the html file name and path
 ##' @importFrom rmarkdown render
+##' @import methods
 ##' @export
 ##' @keywords misc
 ##' @author Richard D. Morey (\email{richarddmorey@@gmail.com})
