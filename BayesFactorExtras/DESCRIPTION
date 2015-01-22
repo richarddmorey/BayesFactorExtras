@@ -4,8 +4,9 @@ Type: Package
 Title: Extra functions for use with the BayesFactor package
 Version: 0.1
 Date: 2015-01-22
-Author: Richard D. Morey
-Maintainer: Richard D. Morey <richarddmorey@gmail.com>
+Authors@R: c(
+    person(c("Richard", "D."), "Morey", email = "richarddmorey@gmail.com", role = c("cre", "aut")),
+    person(c("Felix", "D."), "Schönbrodt", email = "felix@nicebread.de", role = "aut"))
 Depends:
     base64enc,
     BayesFactor (>= 0.9.9)
