@@ -3,7 +3,7 @@ Package: BayesFactorExtras
 Type: Package
 Title: Extra functions for use with the BayesFactor package
 Version: 0.1
-Date: 2014-10-15
+Date: 2015-01-22
 Author: Richard D. Morey
 Maintainer: Richard D. Morey <richarddmorey@gmail.com>
 Depends:

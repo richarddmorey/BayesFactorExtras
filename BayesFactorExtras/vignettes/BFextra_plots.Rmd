@@ -11,8 +11,8 @@ output:
 
 ![alt text](extra/logo.png)
 
-### BayesFactor plots
-#### Felix D. Schönbrodt
+### Plots for sequential Bayes factors
+#### Felix Schönbrodt
 
 ```{r echo=FALSE, message=FALSE, results='hide'}
 options(markdown.HTML.stylesheet = 'extra/manual.css')
@@ -23,33 +23,76 @@ library(knitr)
 library(BayesFactorExtras)
 ```
 
+### Plotting a sequential Bayes factor ###
+
+The `seqBFplot` function plots a sequence of log(BF):  
+`seqBFplot(n, bf)`
+
+`n` and `bf` are vectors of the same length and store the sample size and the corresponding BF at that sample size.
+You can compute the BF for several sample sizes:
+
+```{r}
+## Sleep data from t test example
+data(sleep)
+
+# Compute accumulating evidence from n1=5 participants to n2=10 participants
+bfs <- c()
+for (i in 5:10) {
+	bf <- ttestBF(
+		x = sleep$extra[sleep$group==1][1:i], 
+		y = sleep$extra[sleep$group==2][1:i], paired=TRUE)
+	bfs <- c(bfs, as.vector(bf))
+}
+
+seqBFplot(n=5:10, bf=bfs)
+```
+
+For details on additional parameters, see `?seqBFplot`
+
+(Hint: The same function could also be used to plot a sensitivity analysis. Just insert your prior parameter in the `n` slot, and change the xlab).
+
+### Automatically "sequentializing" a data set ###
+
+It is also possible to take the final data set, and compute how the BF evolved during data collection. To do that, you can pass an object from any Bayes factor analysis to the function `seqBF`.
+
 First, run any BayesFactor analysis on a data set:
 ```{r}
 data(sleep)
-ttest.p <- ttestBF(x = sleep$extra[sleep$group==1], y = sleep$extra[sleep$group==2], paired=TRUE)
+ttest <- ttestBF(x = sleep$extra[sleep$group==1], y = sleep$extra[sleep$group==2], paired=TRUE)
 ```
 
-Next, you can pass this object to the `seqBF` function in order to compute the sequential evolution of the Bayes factor.
+Next, pass this object to the `seqBF` function in order to compute the sequential evolution of the Bayes factor.
 The parameter `min.n` controls the lowest sample size at which the sequential procedure starts.
 ```{r results='hide'}
-ttest.p.seq <- seqBF(ttest.p, min.n=5)
+ttest.seq <- seqBF(ttest, min.n=5)
 ```
 
 Finally, you can plot the sequential BF:
 ```{r}
-plot(ttest.p.seq)
+plot(ttest.seq)
 ```
 
 The numerical values of the sequential BF are stored in the `@bayesFactorSeq` slot of the object.
 Note that the values of the `bf` column are log(BF).
 ```{r}
-ttest.p.seq@bayesFactorSeq
+ttest.seq@bayesFactorSeq
 ```
 
-If multiple alternative hypotheses are tested, each gets it's own line:
+### Multiple Bayes factors in one sequential plot ###
 
-```{r results='hide'}
-ttest.2 <- ttestBF(x = sleep$extra[sleep$group==1], y = sleep$extra[sleep$group==2], nullInterval=c(-Inf, 0))
-ttest.2.seq <- seqBF(ttest.2, min.n=5)
-plot(ttest.2.seq)
-````
+
+If multiple alternative hypotheses are tested (e.g., in ANOVAs), each BF gets it's own line in the plot:
+
+```{r}
+data(puzzles)
+anova2 <- anovaBF(RT ~ shape*color + ID, data = puzzles, whichRandom = "ID", progress=FALSE)
+anova2.seq <- seqBF(anova2, min.n=5, verbose=FALSE)
+plot(anova2.seq)
+```
+
+
+
+*Some caveats:*
+
+- The sequential BF is computed in the order of the data set. If this reflects the order you collected participants, you get your BF evolution corresponding to your data collection. If you reorder the data set, you get another trajectory. (The final BF will always be the same).
+- If data are stored in a blocked design (e.g., first half is condition A, second half is condition B), the function can return an error. If we take the first observations from such a data set, we only have participants from one condition and it's not possible to make a group comparison.
