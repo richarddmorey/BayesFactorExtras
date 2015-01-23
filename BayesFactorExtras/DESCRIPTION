@@ -3,7 +3,7 @@ Package: BayesFactorExtras
 Type: Package
 Title: Extra Functions for Use with the BayesFactor Package
 Version: 0.1
-Date: 2015-01-22
+Date: 2015-01-24
 Authors@R: c(
     person(c("Richard", "D."), "Morey", email = "richarddmorey@gmail.com", role = c("cre", "aut")),
     person(c("Felix", "D."), "Schönbrodt", email = "felix@nicebread.de", role = "aut"))
