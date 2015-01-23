@@ -14,6 +14,12 @@
 #'\item{\code{BFEknitrDownload}}{If \code{TRUE} 
 #'(default), a link to download the Bayes factor object is 
 #'provided. This object contains the analysis and the data.}
+#'
+#'\item{\code{BFEmcmcPlotType}}{Should be 'svg' (default),
+#''png', or 'jpeg'. This controls the type of image that is used
+#' when creating mcmc plots using knitr.}
+#'\item{\code{BFEmcmcConvergence}}{Calculate and report convergence
+#'statistics when creating mcmc plots using knitr?}
 #'}
 #'
 #'@name options-BayesFactorExtras
@@ -24,6 +30,8 @@ NULL
 setOptions <- function(){
   
   if(is.null(options()$BFEknitrDownload)) options(BFEknitrDownload = TRUE)
-
+  if(is.null(options()$BFEmcmcPlotType)) options(BFEmcmcPlotType = 'svg')
+  if(is.null(options()$BFEmcmcConvergence)) options(BFEmcmcConvergence = FALSE)
+  
 }
 

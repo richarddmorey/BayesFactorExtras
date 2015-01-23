@@ -4,7 +4,7 @@
 ##' @title Print interactive HTML/JavaScript Bayes factors
 ##' @param x a BFBayesFactor object
 ##' @param ... further arguments to be passed to or from methods.
-##' @return This function code to be inserted into Rmarkdown documents.
+##' @return The function code to be inserted into Rmarkdown documents.
 ##' @rdname knit_print
 ##' @method knit_print BFBayesFactor
 ##' @export
