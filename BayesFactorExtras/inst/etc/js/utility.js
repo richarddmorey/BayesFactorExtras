@@ -244,11 +244,28 @@ function bfSearch()
     var suf = true;
     var model = $( ".bfmodel", this ).text();
     var nterms = $( ".bfmodel", this ).data('sort');
+    var bf = $( ".bfdisplay", this ).data('sort');
     
     function mapSearch( value, index )
     {
       var first = value.substr(0, 1);
-      if( ( first == "#" ) ){
+      if( ( first == ">" ) ){
+        if( value.length > 1){
+          var num = bfSearchToNum( value.substr(1) );
+          if( isNaN(num) ) return true;
+          return bf > Math.log(num); 
+        }else{
+          return true;
+        }
+      }else if( ( first == "<" ) ){
+        if( value.length > 1){
+          var num = bfSearchToNum( value.substr(1) );
+          if( isNaN(num) ) return true;
+          return bf < Math.log(num); 
+        }else{
+          return true;
+        }
+      }else if( ( first == "#" ) ){
         if( value.length > 1){
           return nterms == value.substr(1);
         }else{
@@ -320,3 +337,19 @@ function bfNterms( model, type ){
   return model.split(" + ").length;
 }
 
+function bfSearchToNum( term ){
+  var sides = term.split("/");
+  var isFraction = ( sides.length == 2 );
+  if ( sides.length > 2 ) return NaN;
+  numerator = parseFloat( sides[0] );
+  if( isFraction ){
+    denominator = parseFloat( sides[1] );
+  }else{
+    denominator = 1;
+  }
+  if( isNaN( numerator ) || isNaN( denominator ) ){
+    return NaN;
+  }else{
+    return numerator / denominator;
+  }
+}
