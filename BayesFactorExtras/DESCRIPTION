@@ -1,7 +1,7 @@
 Encoding: UTF-8
 Package: BayesFactorExtras
 Type: Package
-Title: Extra functions for use with the BayesFactor package
+Title: Extra Functions for Use with the BayesFactor Package
 Version: 0.1
 Date: 2015-01-22
 Authors@R: c(
@@ -18,7 +18,7 @@ Imports:
     rmarkdown,
     dplyr (>= 0.3),
     methods
-Description: This package contains extra functions that can be used to enhance
+Description: Extra functions that can be used to enhance
     the BayesFactor package, such as plots and reports.
 License: GPL-2
 VignetteBuilder: knitr
