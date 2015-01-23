@@ -1,0 +1,40 @@
+
+<p>Enter one or more search terms in the box to filter the models in the table. If more than one term is included, matching will be performed with <code>or</code>. Special search terms are allowed:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Code</th>
+<th align="left">Function</th>
+<th align="left">Example</th>
+<th align="left">What example does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">+</td>
+<td align="left">Require this term in search results</td>
+<td align="left">+shape</td>
+<td align="left">Requires all models to include “shape”</td>
+</tr>
+<tr class="even">
+<td align="left">-</td>
+<td align="left">Require this term NOT to appear in search results</td>
+<td align="left">-shape</td>
+<td align="left">Requires all models to exclude “shape”</td>
+</tr>
+<tr class="odd">
+<td align="left"># (with number)</td>
+<td align="left">Return results with certain number of terms</td>
+<td align="left">#2</td>
+<td align="left">Requires all models to have two terms</td>
+</tr>
+<tr class="even">
+<td align="left">@ (with :, ::, …)</td>
+<td align="left">Return results containing interactions of certain size</td>
+<td align="left">@::</td>
+<td align="left">Requires all models to have a three-way interaction</td>
+</tr>
+</tbody>
+</table>
+
+<p>Click on a row in the Bayes factor table to make that model the denominator. Sort by clicking on the arrows in the column headers.</p>

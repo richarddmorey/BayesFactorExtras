@@ -106,7 +106,10 @@ function buildBFBayesFactor(divname, denom_index)
   var denomerr = bfObj[ denom_index ][ 'error' ];
   var modelType = $("#" + divname + "_modeltype").text();
   buildBFDenominator(bfObj.splice(denom_index,1)[0], divname);
-  
+
+  $( ".BFBayesFactor_hoverhelpicon" ).mouseover( function(){ $( this ).parent().children( ".BFBayesFactor_hoverhelp" ).show() } );
+  $( ".BFBayesFactor_hoverhelpicon" ).mouseout( function(){ $( this ).parent().children( ".BFBayesFactor_hoverhelp" ).hide() } );
+
   $( "#" + divname ).find(".bfhmodel").data("sortCol",".bfmodel");
   $( "#" + divname ).find(".bfhbf").data("sortCol",".bfdisplay");
   $( "#" + divname ).find(".bfherr").data("sortCol",".bferrdisplay");

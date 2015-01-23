@@ -19,6 +19,9 @@ knit_print.BFBayesFactor <- function( x, ... )
   rownames(df) = NULL
   jsonobject = toJSON(df)
   
+  hoverHelpFile = system.file("etc", "html", "hoverhelp.html", package = "BayesFactorExtras")
+  hoverHelpCode = readChar(hoverHelpFile, file.info(hoverHelpFile)$size)
+  
   modelType = class(x@denominator)[1]
   analysisType = x@denominator@type
   
@@ -47,7 +50,11 @@ knit_print.BFBayesFactor <- function( x, ... )
         tags$span(id = paste0(divname,"_denom"), class = "BFBayesFactor_denom"),
         tags$span("...", class="denomdescription")      
       ),
-      tags$input(id = paste0(divname,"_search"), class = "BFBayesFactor_search"),
+      tagAppendChildren(tags$div(class="searchcontainer"),
+                        tags$div(HTML(hoverHelpCode), class="BFBayesFactor_hoverhelp bfhide"),
+                        tags$span(HTML("&nbsp;"),class="BFBayesFactor_hoverhelpicon"),
+                        tags$input(id = paste0(divname,"_search"), class = "BFBayesFactor_search")
+      ),
       mainTable,
       tags$script(HTML(paste0("
         $(document).ready(function () {
