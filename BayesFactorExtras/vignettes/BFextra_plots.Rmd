@@ -17,10 +17,16 @@ output:
 ```{r echo=FALSE, message=FALSE, results='hide'}
 options(markdown.HTML.stylesheet = 'extra/manual.css')
 library(knitr)
-```
 
-```{r}
+library(BayesFactor)
 library(BayesFactorExtras)
+
+options(BFprogress = FALSE)
+bfversion = BFInfo()
+bfeversion = BFEInfo()
+session = sessionInfo()[[1]]
+rversion = paste(session$version.string," on ",session$platform,sep="")
+
 ```
 
 ### Plotting a sequential Bayes factor ###
@@ -32,6 +38,9 @@ The `seqBFplot` function plots a sequence of log(BF):
 You can compute the BF for several sample sizes:
 
 ```{r}
+## First we must load the BayesFactorExtra package
+library(BayesFactorExtras)
+
 ## Sleep data from t test example
 data(sleep)
 
@@ -96,3 +105,7 @@ plot(anova2.seq)
 
 - The sequential BF is computed in the order of the data set. If this reflects the order you collected participants, you get your BF evolution corresponding to your data collection. If you reorder the data set, you get another trajectory. (The final BF will always be the same).
 - If data are stored in a blocked design (e.g., first half is condition A, second half is condition B), the function can return an error. If we take the first observations from such a data set, we only have participants from one condition and it's not possible to make a group comparison.
+
+
+-----
+*This document was compiled with version `r bfversion` of BayesFactor and `r bfeversion` of BayesFactorExtras (`r rversion`)*

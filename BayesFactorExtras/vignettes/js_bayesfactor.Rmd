@@ -5,7 +5,7 @@ output:
 ---
 <!--
 %\VignetteEngine{knitr::rmarkdown}
-%\VignetteIndexEntry{Interactive Bayes factors}
+%\VignetteIndexEntry{Interactive Bayes factor objects}
 \usepackage[utf8]{inputenc}
 -->
 
@@ -17,22 +17,54 @@ output:
 ```{r echo=FALSE,message=FALSE,results='hide'}
 options(markdown.HTML.stylesheet = 'extra/manual.css')
 library(knitr)
+
+library(BayesFactor)
+library(BayesFactorExtras)
+
+options(BFprogress = FALSE)
+bfversion = BFInfo()
+bfeversion = BFEInfo()
+session = sessionInfo()[[1]]
+rversion = paste(session$version.string," on ",session$platform,sep="")
+
 ```
 
-```{r}
-library(BayesFactorExtras)
-```
+The `BayesFactor` package allows the computation of Bayes factors for a variety of designs. The `knitr` package allows the easy creation of HTML reports, such as this one. Using the two together, we can create HTML documents that contain our Bayes factor analyses, such as the one below:
 
 ```{r}
 data(puzzles)
 bf = generalTestBF(RT ~ shape*color*ID, whichRandom="ID", data = puzzles)
 ```
 
-```{r}
+If we simply print the `bf` object, we will see the same output we would get in R. However, unlike in R, we cannot manipulate this object because it is a part of the static webpage. If the comparison model in the denominator is uninteresting, or we would simply like to see a different comparison, we would have to manually do the necessary arithmetic.
+
+```{r eval=FALSE}
+bf
+```
+```{r echo=FALSE}
 show(bf)
 ```
 
+Although this is still useful to see the numerical values of the Bayes factors, it would be useful to be able to manipulate this object in a similar way to how we can within R. The `BayesFactorExtras` package allows this. If we load the `BayesFactorExtras` package inside our knitr-compiled R markdown document, then we get an interactive table containing the Bayes factors. The table is sortable, filterable, and a new comparison model can be changed by simply clicking on a row. Hover over the '?' next to the search box for more help. 
+
 ```{r}
+library(BayesFactorExtras)
+
 bf
 ```
 
+Red rows indicate models that perform worse than the comparison model, and blue rows indicate models that perform better. Note that by default, the `BayesFactorExtras` package will include a link for anyone to download the `BayesFactor` object (see above). This object *contains the data*, and will allow anyone to recompute the Bayes factors in the document. If you want to disable the possibility of downloading the data, turn the option off first with:
+
+```{r eval=FALSE}
+options(BFEknitrDownload = FALSE)
+```
+Objects printed after this option is turned off will not contain a link to download the data.
+
+
+The same interactive display can be had within R by using the `interactBF()` function on the `BayesFactor` object, like so:
+```{r eval=FALSE}
+interactBF(bf)
+```
+
+-----
+*This document was compiled with version `r bfversion` of BayesFactor and `r bfeversion` of BayesFactorExtras (`r rversion`)*
