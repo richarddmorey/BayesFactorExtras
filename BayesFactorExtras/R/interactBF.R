@@ -9,6 +9,17 @@
 ##' @export
 ##' @keywords misc
 ##' @author Richard D. Morey (\email{richarddmorey@@gmail.com})
+##' @examples 
+##' 
+##' ## Create a BayesFactor analysis
+##' data(puzzles)
+##' bf = anovaBF(RT ~ shape*color + ID, data = puzzles, whichRandom = "ID", 
+##'     progress=FALSE)
+##' \dontrun{    
+##' ## Open browser with interactive BayesFactor analysis    
+##' interactBF(bf)
+##' }
+
 interactBF = function(BFObj)
 {
   tf = tempfile(fileext=".html")
