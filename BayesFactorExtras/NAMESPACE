@@ -2,6 +2,7 @@
 
 S3method(knit_print,BFBayesFactor)
 S3method(knit_print,BFmcmc)
+S3method(knit_print,mcmc)
 S3method(plot,BFBayesFactorSeq)
 export(BFEInfo)
 export(createDownloadURI)

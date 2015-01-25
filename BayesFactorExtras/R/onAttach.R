@@ -20,6 +20,8 @@
 #' when creating mcmc plots using knitr.}
 #'\item{\code{BFEmcmcConvergence}}{Calculate and report convergence
 #'statistics when creating mcmc plots using knitr?}
+#'\item{\code{BFEmcmcPlotDims}}{A vector of length 2 indicating the 
+#'width and height of mcmc plots printed by knitr.}
 #'}
 #'
 #'@name options-BayesFactorExtras
@@ -32,6 +34,7 @@ setOptions <- function(){
   if(is.null(options()$BFEknitrDownload)) options(BFEknitrDownload = TRUE)
   if(is.null(options()$BFEmcmcPlotType)) options(BFEmcmcPlotType = 'svg')
   if(is.null(options()$BFEmcmcConvergence)) options(BFEmcmcConvergence = FALSE)
+  if(is.null(options()$BFEmcmcPlotDims)) options(BFEmcmcPlotDims = c(8,5))
   
 }
 

@@ -3,11 +3,14 @@
 \name{knit_print.BFBayesFactor}
 \alias{knit_print.BFBayesFactor}
 \alias{knit_print.BFmcmc}
+\alias{knit_print.mcmc}
 \title{Print interactive HTML/JavaScript Bayes factors}
 \usage{
 \method{knit_print}{BFBayesFactor}(x, ...)
 
 \method{knit_print}{BFmcmc}(x, ...)
+
+\method{knit_print}{mcmc}(x, ...)
 }
 \arguments{
 \item{x}{a BFBayesFactor object}
@@ -17,8 +20,14 @@
 \item{x}{a BFmcmc object}
 
 \item{...}{further arguments to be passed to or from methods.}
+
+\item{x}{an mcmc object}
+
+\item{...}{further arguments to be passed to or from methods.}
 }
 \value{
+The function code to be inserted into Rmarkdown documents.
+
 The function code to be inserted into Rmarkdown documents.
 
 The function code to be inserted into Rmarkdown documents.
@@ -27,13 +36,19 @@ The function code to be inserted into Rmarkdown documents.
 knitr print method for BFBayesFactor objects
 
 knitr print method for BFmcmc objects
+
+knitr print method for mcmc objects
 }
 \details{
 knitr print method for BFBayesFactor objects
 
 knitr print method for BFmcmc objects
+
+knitr print method for mcmc objects
 }
 \author{
+Richard D. Morey (\email{richarddmorey@gmail.com})
+
 Richard D. Morey (\email{richarddmorey@gmail.com})
 
 Richard D. Morey (\email{richarddmorey@gmail.com})

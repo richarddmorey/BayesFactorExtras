@@ -207,7 +207,6 @@ function destroyBFBayesFactor( divname )
 
 function bfSearch()
 {
-  console.log("Search.");
   var divname = $( this ).parents(".BFBayesFactor").attr('id');
   var txt = $.trim( $( this ).val() );
   var terms = txt.split(/\s+/);

@@ -26,3 +26,28 @@ span.BFBayesFactor_hoverhelpicon {
 .bftitles {
   font-weight: bold;
 }
+
+input.BFmcmc_search {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABfklEQVQ4jZXSPUvDUBTG8X/aRqkRFV8KvlUttIigk3RwkPQDiKjg5C6I4NrdpeCgLoIgOPkVdBBsvoJOUpVqJweNRdFa05vrkARbm0g9U8I9z4+TnKvgVjZvdAGbwAowDrwCBrCby+hXBJTihieBMzdIeziMJQS201MDtnIZ/cAXyOaNTuBSSpmYjsVIDw6hqe0IaXP78oxRKvElhA0s5DL66W8gBGwAiZlYjPnRMdrCKpZtY0tI9PSxmEx5fTvZvNE0QQhYAkgPDWPL5hH7oxoT3d0AU0DKD4hrqko0ovr+JAkMaJr3GvcDylUhfMNeVWs177HsBxiWEBTLL/h8ARLJjWkCmEDTOkPAvqIonxcP97xVKz9B6cTPi3d8OBNc4ay0obx7sAYcKxBJ9vbSH+2gUrMomCbvllXffwSs5zK63QC4iA7sALN1gSegAMwFIUrdAe6eR3BuZBm4do9OgFU/pAEIqmzeiAQhLQF/IHstAwHI47+AOuQQWAa2vwFyC4lobkmxNQAAAABJRU5ErkJggg==)
+    no-repeat 10px 6px #fcfcfc;
+    border: 1px solid #d1d1d1;
+    font: bold 12px Arial,Helvetica,Sans-serif;
+    color: #bebebe;
+    width: 150px;
+    padding: 6px 15px 6px 35px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    text-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+    -webkit-transition: all 0.7s ease 0s;
+    -moz-transition: all 0.7s ease 0s;
+    -o-transition: all 0.7s ease 0s;
+    transition: all 0.7s ease 0s;
+}
+
+input.BFmcmc_search:focus {
+  width: 300px;
+}
