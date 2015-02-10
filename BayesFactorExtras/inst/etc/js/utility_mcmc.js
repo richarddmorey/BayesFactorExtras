@@ -15,7 +15,15 @@ function revealPlot(){
   var parCode = $( this ).val();
   var numSelected = $( this ).children( ":selected" ).index();
   $( "#" + divname + "_modelslider" ).val( numSelected + 1 );
-  
+  if( $("#" + divname ).find( ".mcmcdata" ).size() ){ // interactive
+    revealPlot_interactive.call( this, divname, parCode);
+  }else{ // non-interactive
+    revealPlot_noninteractive.call( this, divname, parCode);
+  }
+}
+
+function revealPlot_noninteractive( divname, parCode ){
+
   $( this ).parents(".BFmcmc").find( ".BFmcmc_plot").addClass( "bfhide" );
   var plotDiv = divname + "_plot_" + parCode;
   $( "#" + plotDiv ).removeClass( "bfhide" ); 

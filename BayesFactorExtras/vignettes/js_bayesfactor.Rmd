@@ -26,6 +26,7 @@ bfversion = BFInfo()
 bfeversion = BFEInfo()
 session = sessionInfo()[[1]]
 rversion = paste(session$version.string," on ",session$platform,sep="")
+options(BFEknitrDownload = FALSE)
 
 ```
 

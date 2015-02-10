@@ -1,0 +1,80 @@
+---
+output:
+  html_document:
+    theme: flatly
+---
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Interactive MCMC objects}
+\usepackage[utf8]{inputenc}
+-->
+
+![alt text](extra/logo.png)
+
+### Interactive MCMC objects
+#### Richard D. Morey
+
+```{r echo=FALSE,message=FALSE,results='hide'}
+options(markdown.HTML.stylesheet = 'extra/manual.css')
+library(knitr)
+
+library(BayesFactor)
+library(BayesFactorExtras)
+
+options(BFprogress = FALSE)
+bfversion = BFInfo()
+bfeversion = BFEInfo()
+session = sessionInfo()[[1]]
+rversion = paste(session$version.string," on ",session$platform,sep="")
+options(BFEknitrDownload = FALSE)
+```
+
+The `BayesFactor` package allows the sampling from the posterior distribution of specific models within a variety of designs. Using the `BayesFactor` and `knitr` together, we can create HTML documents that contain interactive MCMC results, such as the one below (or, in fact, any `mcmc` object):
+
+```{r}
+data(puzzles)
+bf = lmBF(RT ~ shape*color + ID, whichRandom="ID", data = puzzles)
+chains = posterior(bf, iterations = 1000)
+```
+
+If we simply plot the `chains` object, we will see the same output we would get in R:
+
+```{r eval=FALSE}
+plot(chains)
+```
+
+(plots omitted) Although this is sometimes useful to have all these plots at once, for MCMC objects this is quite inconvenient, because there are several plots for each parameter. It would be useful to be able to have a better interface than simply scrolling through the plots.
+
+If we use the `BayesFactorExtras` package inside our knitr-compiled R markdown document, then we can simply print the object to get a user-friendly interface for viewing our MCMC chains. The parameter list is filterable, and scrolling through large numbers of parameters is easy.
+
+```{r}
+library(BayesFactorExtras)
+
+chains
+```
+
+Note that by default, the `BayesFactorExtras` package will include a link for anyone to download the `mcmc` object (see above). This object *contains the data*, and will allow anyone to recompute the MCMC results in the document. If you want to disable the possibility of downloading the data, turn the option off first with:
+
+```{r eval=FALSE}
+options(BFEknitrDownload = FALSE)
+```
+Objects printed after this option is turned off will not contain a link to download the data.
+
+
+Interactive plots can be had by setting the option `BFEmcmcPlotType` to `interactive`, like so:
+```{r}
+options( BFEmcmcPlotType = "interactive" )
+```
+
+Other options are `svg`, `png`, and `jpg`.
+
+This will yield an interactive plot that allows scrolling and zooming of the MCMC chain, as well as changing the kernel density estimator bandwidth via scrolling over the histogram.
+
+```{r}
+chains
+```
+
+
+
+-----
+*This document was compiled with version `r bfversion` of BayesFactor and `r bfeversion` of BayesFactorExtras (`r rversion`)*

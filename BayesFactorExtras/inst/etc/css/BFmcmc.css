@@ -51,3 +51,53 @@ input.BFmcmc_search {
 input.BFmcmc_search:focus {
   width: 300px;
 }
+
+div.BFmcmc_lineplot {
+  float: left;
+  border: 1px solid black;
+}
+
+div.BFmcmc_histplot {
+  float: left;
+  border: 1px solid black;
+}
+
+div.BFmcmc_plotContainer {
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.bar {
+  fill: #bbb;
+  shape-rendering: crispEdges;
+  stroke-width:1;
+  stroke:rgba(0,0,0,1);
+}
+
+.line {
+  fill: none;
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.point {
+  fill: rgba(0,0,0,.1);
+  shape-rendering: crispEdges;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.y.axis path {
+  display: none;
+}
+
+rect.pane {
+  cursor: move;
+  fill: none;
+  pointer-events: all;
+}
