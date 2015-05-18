@@ -39,7 +39,7 @@
 #' seqBFplot(5:10, bf)
 #' seqBFplot(1:100, cumsum(rnorm(100, 2)))
 
-seqBFplot <- function(n, bf, linetype=NA, linetype.label="Alternative", xlab="n", ylab="log(BF)", main="", ylim=NA, log.it=TRUE, forH1=TRUE, fontsize=3.2) {
+seqBFplot <- function(n, bf, linetype=NA, linetype.label="Alternative", xlab="n", ylab="Bayes Factor", main="", ylim=NA, log.it=TRUE, forH1=TRUE, fontsize=3.2) {
 	if (length(n) != length(bf)) stop("`n` and `bf` should have the same length")
 	if (length(n) < 1) stop("`n`and `bf` must habe length > 1")
 		
@@ -158,7 +158,7 @@ seqBFplot <- function(n, bf, linetype=NA, linetype.label="Alternative", xlab="n"
 
 
 	# set scale ticks
-	p1 <- p1 + scale_y_continuous(breaks=y_breaks, labels=c("-log(100)", "-log(30)", "-log(10)", "-log(3)", "log(1)", "log(3)", "log(10)", "log(30)", "log(100)"))
+	p1 <- p1 + scale_y_continuous(breaks=y_breaks, labels=c("1/100", "1/30", "1/10", "1/3", "1", "3", "10", "30", "100"))
 	
 
 	if (main != "") p1 <- p1 + ggtitle(main)
