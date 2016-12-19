@@ -7,6 +7,11 @@ BayesFactorExtras
 
 ## Installation
 
-install.packages("devtools")
-library("devtools")
+```R
+## install devtools if necessary
+install.packages('devtools')
+## Load devtools package for install_github()
+library(devtools)
+## get BayesFactorExtras from github
 install_github("richarddmorey/BayesFactorExtras", subdir="BayesFactorExtras")
+```
