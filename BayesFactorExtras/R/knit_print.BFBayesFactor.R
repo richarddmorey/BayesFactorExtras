@@ -1,5 +1,5 @@
 ##' knitr print method for BFBayesFactor objects
-##' 
+##'
 ##' knitr print method for BFBayesFactor objects
 ##' @title Print interactive HTML/JavaScript Bayes factors
 ##' @param x a BFBayesFactor object
@@ -18,13 +18,13 @@ knit_print.BFBayesFactor <- function( x, ... )
   df$row = htmlEscape(rownames(df))
   rownames(df) = NULL
   jsonobject = toJSON(df)
-  
+
   hoverHelpFile = system.file("etc", "html", "hoverhelp.html", package = "BayesFactorExtras")
   hoverHelpCode = readChar(hoverHelpFile, file.info(hoverHelpFile)$size)
-  
+
   modelType = class(x@denominator)[1]
   analysisType = x@denominator@type
-  
+
   mainDiv = tags$div(id = divname, class = "BFBayesFactor")
   mainTable = tags$table(id = paste0(divname,"_bf"), class = "BFBayesFactor_bf")
   mainTable = tagAppendChildren(mainTable,
@@ -32,23 +32,23 @@ knit_print.BFBayesFactor <- function( x, ... )
             tagAppendChildren(tags$tr(class = "bfhrow"),
                 tags$th(class = "bfcolunsorted bfhmodel"),
                 tags$th(class = "bfcolunsorted bfhbf"),
-                tags$th(class = "bfcolunsorted bfherr")                
+                tags$th(class = "bfcolunsorted bfherr")
             ),tagAppendChildren(tags$tr(class = "bfhtitles"),
                                 tags$th("...the model below..."),
                                 tags$th("...is preferred by..."),
-                                tags$th("")                
+                                tags$th("")
             )
       ),
       tags$tbody(class = "bfbody")
   )
-  html = tagAppendChildren(mainDiv, 
+  html = tagAppendChildren(mainDiv,
       tags$div(HTML(jsonobject), id = paste0(divname,"_json"), class = "BFBayesFactor_json bfhide"),
       tags$div(HTML(analysisType), id = paste0(divname,"_analysistype"), class = "BFBayesFactor_analysistype bfhide"),
       tags$div(HTML(modelType), id = paste0(divname,"_modeltype"), class = "BFBayesFactor_modeltype bfhide"),
       tagAppendChildren(tags$div(class="denomccontainer"),
-        tags$span("When compared against the model ", class="denomdescription"),                
+        tags$span("When compared against the model ", class="denomdescription"),
         tags$span(id = paste0(divname,"_denom"), class = "BFBayesFactor_denom"),
-        tags$span("...", class="denomdescription")      
+        tags$span("...", class="denomdescription")
       ),
       tagAppendChildren(tags$div(class="searchcontainer"),
                         tags$div(HTML(hoverHelpCode), class="BFBayesFactor_hoverhelp bfhide"),
@@ -60,21 +60,21 @@ knit_print.BFBayesFactor <- function( x, ... )
         $(document).ready(function () {
           buildBFBayesFactor('",divname,"');
         });
-      "))) 
+      ")))
   )
-  
-  if(options()$BFEknitrDownload){
+
+  if(getOption('BFEknitrDownload', TRUE)){
     DLtag = createDownloadURI("x", filename = "BayesFactorObject", textHTML = "Click here to download this BayesFactor object.", envir = parent.frame(), printHTML = FALSE)
     html = tagList(html, DLtag)
   }
-    
-  
+
+
   # return html
   html <- attachDependencies(
     html,
     BFBayesFactor_dependencies
   )
-  
+
   knit_print(browsable(html), ... )
 }
 
