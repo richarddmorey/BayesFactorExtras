@@ -42,24 +42,22 @@ knit_print.BFBayesFactor <- function( x, ... )
       tags$tbody(class = "bfbody")
   )
   html = tagAppendChildren(mainDiv,
-      tags$div(HTML(jsonobject), id = paste0(divname,"_json"), class = "BFBayesFactor_json bfhide"),
-      tags$div(HTML(analysisType), id = paste0(divname,"_analysistype"), class = "BFBayesFactor_analysistype bfhide"),
-      tags$div(HTML(modelType), id = paste0(divname,"_modeltype"), class = "BFBayesFactor_modeltype bfhide"),
+      tags$script(HTML(jsonobject), id = paste0(divname,"_json"), class = "BFBayesFactor_json", type="application/json"),
+      tags$script(HTML(analysisType), id = paste0(divname,"_analysistype"), class = "BFBayesFactor_analysistype", type="application/json"),
+      tags$script(HTML(modelType), id = paste0(divname,"_modeltype"), class = "BFBayesFactor_modeltype", type="application/json"),
       tagAppendChildren(tags$div(class="denomccontainer"),
         tags$span("When compared against the model ", class="denomdescription"),
         tags$span(id = paste0(divname,"_denom"), class = "BFBayesFactor_denom"),
         tags$span("...", class="denomdescription")
       ),
       tagAppendChildren(tags$div(class="searchcontainer"),
-                        tags$div(HTML(hoverHelpCode), class="BFBayesFactor_hoverhelp bfhide"),
+                        tags$div(HTML(hoverHelpCode), style="display: none", class="BFBayesFactor_hoverhelp bfhide"),
                         tags$span(HTML("&nbsp;"),class="BFBayesFactor_hoverhelpicon"),
                         tags$input(id = paste0(divname,"_search"), class = "BFBayesFactor_search")
       ),
       mainTable,
       tags$script(HTML(paste0("
-        $(document).ready(function () {
           buildBFBayesFactor('",divname,"');
-        });
       ")))
   )
 
@@ -85,6 +83,6 @@ BFBayesFactor_dependencies <- list(
     version = "1.0",#BFEInfo(FALSE),
     src = system.file("etc", package = "BayesFactorExtras"),
     stylesheet = "css/BFBayesFactor.css",
-    script = "js/utility.js"
+    script = c("js/jquery-3.1.1.min.js", "js/utility.js")
   )
 )
