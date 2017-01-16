@@ -9,7 +9,7 @@ div.BFBayesFactor_hoverhelp {
   background-color:rgba(255,255,255,0.95);
   border: 2px solid black;
   border-radius: 10px;
-  
+
 }
 
 span.BFBayesFactor_hoverhelpicon {
@@ -25,6 +25,10 @@ span.BFBayesFactor_hoverhelpicon {
 div.searchcontainer {
   height: 32px;
   position: relative;
+}
+
+table.BFBayesFactor_bf {
+    min-width: 440px ;
 }
 
 table.BFBayesFactor td {
@@ -127,10 +131,6 @@ input.BFBayesFactor_search {
     -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
-    -webkit-transition: all 0.7s ease 0s;
-    -moz-transition: all 0.7s ease 0s;
-    -o-transition: all 0.7s ease 0s;
-    transition: all 0.7s ease 0s;
 }
 
 input.BFBayesFactor_search:focus {

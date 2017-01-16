@@ -18,13 +18,13 @@ function getSortOrder(toSort) {
 function expString(x)
 {
   if( isNaN(x) ) return "NA";
-  
+
   var toBase10log = x / Math.log(10);
   var numMax = Math.log(Number.MAX_VALUE);
   var numMin = Math.log(Number.MIN_VALUE);
 
   var first, second;
-   
+
 
   if( x > numMax ){
     first = Math.pow( 10, toBase10log - Math.floor(toBase10log) );
@@ -33,7 +33,7 @@ function expString(x)
   }else if( x < numMin ){
     first = Math.pow( 10, 1 - (Math.ceil(toBase10log) - toBase10log) );
     second = Math.ceil(toBase10log) - 1;
-    return first + "e" + second;    
+    return first + "e" + second;
   }else{
     return prettyNum( Math.exp(x) );
   }
@@ -71,7 +71,7 @@ function decimalAdjust(type, value, exp) {
 function prettyNum(x, digits, scipen){
   if(typeof(digits)==='undefined') digits = 7;
   if(typeof(scipen)==='undefined') scipen = 0;
-  
+
   var expnot = x.toExponential(digits);
   var stdnot = x.toString();
   var pretty;
@@ -113,8 +113,10 @@ function buildBFBayesFactor(divname, denom_index)
   $( "#" + divname ).find(".bfhmodel").data("sortCol",".bfmodel");
   $( "#" + divname ).find(".bfhbf").data("sortCol",".bfdisplay");
   $( "#" + divname ).find(".bfherr").data("sortCol",".bferrdisplay");
-  
-  $.each(bfObj, function(index, value){    
+
+  var $tbody = $( "#" + divname ).find('tbody');
+
+  $.each(bfObj, function(index, value){
     var bf = value['bf'] - denombf;
     var err = Math.sqrt( Math.pow( value['error'], 2 ) + Math.pow( denomerr, 2 ) );
     var signclass;
@@ -131,7 +133,7 @@ function buildBFBayesFactor(divname, denom_index)
     var bfdisplay = $("<td/>", { class: "bfdisplay" }).text( bfprefix + expString( Math.abs(bf) ) ).data( "sort", bf );
     var errordisplay = $("<td/>", { class: "bferrdisplay" }).html( "&#177;" + prettyErr( err ) ).data( "sort", err );
     $("<tr/>", { class: "bfrow " + signclass }).data( "index", value['index'])
-    .appendTo("#" + divname + "_bf")
+    .appendTo($tbody)
     .append(model)
     .append(bfdisplay)
     .append(errordisplay)
@@ -148,7 +150,6 @@ function buildBFBayesFactor(divname, denom_index)
       bfSearch.call( this );
     })
     .trigger( "input" );
-  
 }
 
 function bfSort(){
@@ -156,7 +157,7 @@ function bfSort(){
   var sortColClass;
   var sortOrder = $( this ).data("sorted");
   sortOrder = sortOrder ? -sortOrder : -1;
-  sortClass = sortOrder == -1 ? "bfcolascsorted" : "bfcoldecsorted"; 
+  sortClass = sortOrder == -1 ? "bfcolascsorted" : "bfcoldecsorted";
   $( this ).parent()
     .children( "th" )
     .removeData("sorted")
@@ -165,18 +166,18 @@ function bfSort(){
   $( this ).data( "sorted", sortOrder )
     .removeClass("bfcoldecsorted bfcolascsorted bfcolunsorted")
     .addClass( sortClass );
-  
+
   sortColClass = $( this ).data( "sortCol" );
-  
+
   var x = $("#" + divname + " .bfrow").map(function(){
     var idx = $( this ).data( "index" );
     var sortValue = $( sortColClass, this ).data("sort");
     return sortValue;
   }).get();
-  
+
   var order = getSortOrder(x);
   if(sortOrder == -1) order.reverse();
-  
+
   var els = $("#" + divname + " .bfrow");
   var el;
   for( var i=order.length - 1 ; i >= 0 ; i-- ){
@@ -202,7 +203,7 @@ function setDenom()
 function destroyBFBayesFactor( divname )
 {
   $("#" + divname + " .BFBayesFactor_denom").empty();
-  $("#" + divname + " .BFBayesFactor_bf > tbody").remove();
+  $("#" + divname + " .BFBayesFactor_bf > tbody").empty();
 }
 
 function bfSearch()
@@ -213,18 +214,18 @@ function bfSearch()
   var necessary = [ ];
   var sufficient = [ ];
   var exclude = [ ];
-  
+
   if( !validSearch.call( this ) ){
     $( this ).addClass( "bfInvalidSearch" );
     return;
   }else{
     $( this ).removeClass( "bfInvalidSearch" );
   }
-  
+
   $.each(terms, function( index, value ){
     var first = value.substr(0, 1);
-    if( !value.length ) return; 
-    if( ( first == "+" ) ){ 
+    if( !value.length ) return;
+    if( ( first == "+" ) ){
       if( value.length > 1){
         necessary.push( value.substr( 1 ) );
       }
@@ -236,7 +237,7 @@ function bfSearch()
       sufficient.push( value );
     }
   });
-  
+
   $("#" + divname + " .bfrow").each( function(){
     var nec = true;
     var exc = true;
@@ -244,7 +245,7 @@ function bfSearch()
     var model = $( ".bfmodel", this ).text();
     var nterms = $( ".bfmodel", this ).data('sort');
     var bf = $( ".bfdisplay", this ).data('sort');
-    
+
     function mapSearch( value, index )
     {
       var first = value.substr(0, 1);
@@ -252,7 +253,7 @@ function bfSearch()
         if( value.length > 1){
           var num = bfSearchToNum( value.substr(1) );
           if( isNaN(num) ) return true;
-          return bf > Math.log(num); 
+          return bf > Math.log(num);
         }else{
           return true;
         }
@@ -260,7 +261,7 @@ function bfSearch()
         if( value.length > 1){
           var num = bfSearchToNum( value.substr(1) );
           if( isNaN(num) ) return true;
-          return bf < Math.log(num); 
+          return bf < Math.log(num);
         }else{
           return true;
         }
@@ -284,7 +285,7 @@ function bfSearch()
         return model.match( value ) !== null;
       }
     }
-    
+
     if( sufficient.length )
       var suf = $.map( sufficient, mapSearch ).some( function(el){ return el; } );
     if( necessary.length )
@@ -312,12 +313,12 @@ function validSearch(){
       return false;
     var terms = str.split(/\s+/);
     var contains_bad = $.map(terms, function(value, index){
-      if( value.match(/@/) === null ) 
-        return false; 
+      if( value.match(/@/) === null )
+        return false;
       var is_good = value.match(/^[\+-]?@:+$/);
       return (is_good === null);
     }).some( function( el ) { return el; } );
-    if(contains_bad) 
+    if(contains_bad)
       return false;
   }
   return true;
@@ -329,10 +330,10 @@ function bfNterms( model, type ){
   isztm = $.map(ztm, function( value, index ){
     return value == model;
   }).some( function( el ) { return el; } );
-  
+
   // model is a zero term model
   if(isztm) return 0;
-  
+
   return model.split(" + ").length;
 }
 
