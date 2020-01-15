@@ -22,3 +22,4 @@ Description: Extra functions that can be used to enhance
     the BayesFactor package, such as plots and reports.
 License: GPL-2
 VignetteBuilder: knitr
+StagedInstall: no
