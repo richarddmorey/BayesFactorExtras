@@ -4,8 +4,8 @@
 #' If you provide Bayes factors that are already logged (e.g., from the output of the \code{\link{ttest.tstat}} function), set \code{log.it} to \code{FALSE}.
 #' This function is in particular useful for plotting the trajectory of a sequential Bayes factor test
 #' @title Plot a Bayes factor object
-#' @param n A vector of numbers for the x axis
-#' @param bf A vector of Bayes factors (same length as x)
+#' @param n A vector of sample sizes for the x axis
+#' @param bf A vector of Bayes factors (must be same length as n)
 #' @param linetype If several lines should be drawn, this variable defines which data point belongs to which line
 #' @param linetype.label The heading of the linetype legend
 #' @param xlab Label for x axis
@@ -137,7 +137,7 @@ seqBFplot <- function(n, bf, linetype=NA, linetype.label="Alternative", xlab="n"
 	p1 <- p1 + annotate("text", x=Inf, y=-.55 , label=paste0("~~Anectodal~H[", ifelse(forH1==TRUE,0,1), "]"), 
 		hjust=0, vjust=.5, size=fontsize, color="black", parse=TRUE)
 	p1 <- p1 + annotate("text", x=Inf, y=.55  , label=paste0("~~Anectodal~H[", ifelse(forH1==TRUE,1,0), "]"), 
-		hjust=0, vjust=.5, vjust=.5, size=fontsize, color="black", parse=TRUE)
+		hjust=0, vjust=.5, size=fontsize, color="black", parse=TRUE)
 
 	if (max(ylim) >= 5.15) {
 		p1 <- p1 + annotate("text", x=Inf, y=5.15, label=paste0("~~Extreme~H[", ifelse(forH1==TRUE,1,0), "]"), 
